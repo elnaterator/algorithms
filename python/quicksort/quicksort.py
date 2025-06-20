@@ -5,9 +5,7 @@ import random
 def quicksort(a: list[int]):
 
     def swap(i, j):
-        v = a[j]
-        a[j] = a[i]
-        a[i] = v
+       a[i], a[j] = a[j], a[i]
 
     def qsort_rec(low: int, high: int):
         if high - low < 1:
