@@ -1,23 +1,18 @@
 from datetime import datetime
 import random
 
+
 def quicksort(a: list[int]):
-    """Sorts a list of integers in place using quicksort algorithm."""
-    
+
     def swap(i, j):
         v = a[j]
         a[j] = a[i]
         a[i] = v
-        
-    # 5, 8, 7
-    # i
-    # j
-    # pivot = 5
-    
+
     def qsort_rec(low: int, high: int):
         if high - low < 1:
             return
-        pivot, i, j = a[high], low, high-1
+        pivot, i, j = a[high], low, high - 1
         while i <= j:
             if a[i] > pivot:
                 if a[j] <= pivot:
@@ -26,19 +21,28 @@ def quicksort(a: list[int]):
             else:
                 i += 1
         swap(i, high)
-        qsort_rec(low, i-1)
-        qsort_rec(i+1, high)
-            
+        qsort_rec(low, i - 1)
+        qsort_rec(i + 1, high)
+
     qsort_rec(0, len(a) - 1)
-    
+
+
+def test_sort(a, b):
+    print(f"testing {a} -> {b}")
+    quicksort(a)
+    assert a == b
+
 
 if __name__ == "__main__":
-    #a = [random.randint(-1000, 1000) for _ in range(1000000)]
-    a = [4, 2, 8, 5, 6, 1, 4]
-    start = datetime.now()
-    quicksort(a)
-    print(datetime.now() - start)
-    print(a)
-    
 
-    
+    test_sort([], [])
+    test_sort([4, 2, 8, 5, 6, 1, 4], [1, 2, 4, 4, 5, 6, 8])
+    test_sort([1, 2, 3, 4], [1, 2, 3, 4])
+    test_sort([-1, -2, -3, -4], [-4, -3, -2, -1])
+
+    size = 1_000_000
+    bigarray = [random.randint(-1000, 1000) for _ in range(size)]
+    start = datetime.now()
+    quicksort(bigarray)
+    end = datetime.now()
+    print(f"sorted array of size {size} in {end - start}")
